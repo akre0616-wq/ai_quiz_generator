@@ -1,0 +1,199 @@
+body {
+    background: linear-gradient(to right, #141e30, #243b55);
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 60%;
+    margin: 50px auto;
+}
+
+/* Card layout with smooth hover lift */
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2.5rem;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 20px 0;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-5px);
+    border-color: #00c6ff;
+}
+
+/* Interactive Buttons */
+button {
+    padding: 10px 20px;
+    background: #00c6ff;
+    border: none;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s, transform 0.1s;
+}
+
+button:hover {
+    background: #00a0d6;
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+/* Gaming HUD for Stats */
+#gameStats {
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+}
+
+/* Multiple Choice Options */
+.quiz-option {
+    margin: 10px 0;
+    text-align: left;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    transition: background 0.3s, transform 0.2s;
+    cursor: pointer;
+}
+
+.quiz-option:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(5px);
+}
+
+/* --- GAMIFICATION ANIMATIONS --- */
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.correct-pulse {
+    animation: pulse 0.5s forwards;
+    color: #00ffcc !important;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.wrong-shake {
+    animation: shake 0.4s forwards;
+    color: #ff4d4d !important;
+}
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    50% {
+        transform: translateX(5px);
+    }
+
+    75% {
+        transform: translateX(-5px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* --- LOGIN MODAL (POP-UP) STYLES --- */
+
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: #141e30;
+    margin: 15% auto;
+    padding: 30px;
+    width: 300px;
+    border: 2px solid #00c6ff;
+    box-shadow: 0 0 20px rgba(0, 198, 255, 0.5);
+    position: relative;
+    border-radius: 10px;
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #00c6ff;
+}
+
+.auth-input {
+    width: 85%;
+    padding: 10px;
+    margin: 10px 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #00c6ff;
+    color: white;
+    border-radius: 5px;
+    outline: none;
+    transition: background 0.3s;
+}
+
+.auth-input:focus {
+    background: rgba(255, 255, 255, 0.15);
+}

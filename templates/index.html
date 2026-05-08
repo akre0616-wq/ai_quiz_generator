@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Quiz Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div id="auth-section" style="position: absolute; top: 20px; right: 20px;">
+        <span id="user-display" style="display: none; font-weight: bold; margin-right: 10px; color: #00c6ff;"></span>
+        <button id="login-btn" onclick="openModal()">Login</button>
+        <button id="dashboard-btn" onclick="window.location.href='/dashboard'"
+            style="display: none; background: #00c6ff; color: black;">Dashboard</button>
+        <button id="logout-btn" onclick="logout()" style="display: none; background: #ff4d4d;">Logout</button>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content card">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title">Ninja Login</h2>
+
+            <input type="text" id="username" placeholder="Username" class="auth-input">
+            <input type="password" id="password" placeholder="Password" class="auth-input">
+
+            <button id="auth-submit" onclick="attemptAuth()" style="width: 100%; margin-top: 10px;">Enter
+                Academy</button>
+
+            <p style="margin-top: 15px; font-size: 0.9em;">
+                <span id="auth-toggle-text">Need an account?</span>
+                <a href="#" onclick="toggleAuthMode()"
+                    style="color: #00c6ff; text-decoration: none; font-weight: bold;">Click here</a>
+            </p>
+            <p id="auth-message" style="color: #ff4d4d; margin-top: 10px; font-weight: bold;"></p>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>AI Quiz Arena</h1>
+
+        <div id="gameStats">
+            <div>Score: <span id="score">0</span></div>
+            <div>XP: <span id="xp">0 (Rank: Academy Student)</span></div>
+            <div>Streak: <span id="streak">0</span></div>
+        </div>
+
+        <div class="card">
+            <input type="text" id="topic" placeholder="Enter topic (e.g., Python, Naruto)"
+                style="padding: 10px; width: 60%; margin-right: 10px;">
+            <input type="number" id="num_questions" placeholder="Questions (e.g., 5)" min="1" max="20"
+                style="padding: 10px; width: 20%;">
+            <br><br>
+            <button onclick="generateQuiz()">Generate Quiz</button>
+        </div>
+
+        <div class="card">
+            <input type="file" id="fileInput" accept=".txt,.pdf" style="margin-right: 10px;">
+            <button onclick="uploadFile()">Generate from File</button>
+        </div>
+
+        <div id="quizContainer"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
