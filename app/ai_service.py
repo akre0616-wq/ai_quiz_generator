@@ -13,32 +13,33 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 def generate_quiz(content, num_questions):
 
     prompt = f"""
-    Generate {num_questions} multiple choice quiz questions from the following content.
+Generate {num_questions} multiple choice quiz questions from the following content.
 
-    Return ONLY valid JSON in this exact format:
+Return ONLY valid JSON in this exact format:
 
+{{
+  "quiz": [
     {{
-      "quiz": [
-        {{
-          "question": "Question text",
-          "options": ["Option A", "Option B", "Option C", "Option D"],
-          "answer": "Correct Option"
-        }}
-      ]
+      "question": "Question text",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "answer": "Correct Option"
     }}
+  ]
+}}
 
-    Rules:
-    - Do not include explanations
-    - Do not include markdown
-    - Do not include ```json
-    - Each question must have exactly 4 options
-    - Answer must exactly match one option
+Rules:
+- No markdown
+- No explanations
+- No extra text
+- Exactly 4 options per question
+- Answer must exactly match one option
 
-    Content:
-    {content}
-    """
+Content:
+{content}
+"""
 
     try:
+
         # Load Gemini model
         model = genai.GenerativeModel("gemini-1.5-flash")
 
@@ -46,36 +47,55 @@ def generate_quiz(content, num_questions):
         response = model.generate_content(
             prompt,
             generation_config=genai.GenerationConfig(
-                temperature=0.3
+                temperature=0.2
             )
         )
 
-        # Get response text
+        # Extract text safely
         text = response.text.strip()
 
         # Remove markdown if Gemini adds it
         text = text.replace("```json", "")
         text = text.replace("```", "")
+        text = text.strip()
 
-        # Debug print
         print("\nRAW GEMINI RESPONSE:\n")
         print(text)
 
-        # Convert JSON string to Python dictionary
+        # Convert to Python dictionary
         quiz_data = json.loads(text)
 
-        # Validate quiz structure
+        # Validate structure
         if "quiz" not in quiz_data:
-            raise ValueError("Invalid quiz format")
+            raise ValueError("Quiz key missing")
 
         return quiz_data
+
+    except json.JSONDecodeError as json_error:
+
+        print("\nJSON ERROR:\n")
+        print(json_error)
+
+        return {
+            "quiz": [
+                {
+                    "question": "JSON parsing failed.",
+                    "options": [
+                        "Invalid Gemini Response",
+                        "Formatting Error",
+                        "Retry Quiz",
+                        "Server Error"
+                    ],
+                    "answer": "Retry Quiz"
+                }
+            ]
+        }
 
     except Exception as e:
 
         print("\nGEMINI ERROR:\n")
         print(e)
 
-        # Fallback response
         return {
             "quiz": [
                 {
